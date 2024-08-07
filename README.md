@@ -1,2 +1,15 @@
 # buildah-xip
-Buildah with a few exta tools
+
+[![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](https://hub.docker.com/repository/docker/xipdockeruser/buildah-xip)
+
+[![github-runner-extra](https://github.com/xip-online-applications/buildah-xip/actions/workflows/cicd.yml/badge.svg)](https://github.com/xip-online-applications/buildah-xip/actions/workflows/cicd.yml)
+
+[buildah](https://buildah.io)
++
+[curl, git-crypt, tzdata, which]
+
+## Building flow
+
+The versions in use are whatever the operating system or vendor choose to use at this time.
+
+Every month, the Dockerfile is built and pushed automatically to the `latest` tag.
