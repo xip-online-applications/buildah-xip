@@ -2,7 +2,7 @@
 
 [![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)](https://hub.docker.com/repository/docker/xipdockeruser/buildah-xip)
 
-[![github-runner-extra](https://github.com/xip-online-applications/buildah-xip/actions/workflows/cicd.yml/badge.svg)](https://github.com/xip-online-applications/buildah-xip/actions/workflows/cicd.yml)
+[![buildah-xip](https://github.com/xip-online-applications/buildah-xip/actions/workflows/cicd.yml/badge.svg)](https://github.com/xip-online-applications/buildah-xip/actions/workflows/cicd.yml)
 
 [buildah](https://buildah.io)
 +
