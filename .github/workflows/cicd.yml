@@ -2,8 +2,6 @@ name: buildah-xip
 
 on:
   push:
-    branches:
-      - master
   schedule:
       - cron: '6 6 6 * *'
 
@@ -31,7 +29,17 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+    - name: 🧪 Test buildah-xip
+      if: github.ref != 'refs/heads/master' && github.event_name != 'schedule'
+      uses: docker/build-push-action@v6
+      with:
+        platforms: linux/amd64,linux/arm64
+        push: false
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
     - name: 🚀 Push buildah-xip
+      if: github.ref == 'refs/heads/master' || github.event_name == 'schedule'
       uses: docker/build-push-action@v6
       with:
         platforms: linux/amd64,linux/arm64
