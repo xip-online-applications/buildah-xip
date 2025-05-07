@@ -1,4 +1,4 @@
-FROM ghcr.io/gitleaks/gitleaks:latest AS gitleaks
+FROM ghcr.io/gitleaks/gitleaks AS gitleaks
 
 FROM quay.io/buildah/stable
 
