@@ -6,7 +6,7 @@
 
 [buildah](https://buildah.io)
 +
-[curl, git-crypt, tzdata, which]
+[curl, git-crypt, gitleaks, tzdata, which]
 
 ## Building flow
 

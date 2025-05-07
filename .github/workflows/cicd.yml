@@ -7,7 +7,10 @@ on:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
+
+env:
+  CONTAINER_NAME: buildah-xip
 
 jobs:
 
@@ -17,6 +20,11 @@ jobs:
     steps:
     - name: 📥 Checkout
       uses: actions/checkout@v4
+
+    - name: 📗 Outputs
+      id: vars
+      run: |
+        echo "repo_lower=$(echo "${{ github.repository }}" | awk '{print tolower($0)}')" >> $GITHUB_OUTPUT
 
     - name: 💿 Setup Docker (1/2)
       uses: docker/setup-qemu-action@v3
@@ -28,23 +36,32 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
+        logout: false
 
-    - name: 🧪 Test buildah-xip
+    - name: 👤 Login GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        logout: false
+
+    - name: 🧪 Test ${{ ENV.CONTAINER_NAME }}
       if: github.ref != 'refs/heads/master' && github.event_name != 'schedule'
       uses: docker/build-push-action@v6
       with:
         platforms: linux/amd64,linux/arm64
         push: false
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
+        cache-from: type=registry,ref=ghcr.io/${{ steps.vars.outputs.repo_lower }}/${{ ENV.CONTAINER_NAME }}:cache
+        cache-to: type=registry,ref=ghcr.io/${{ steps.vars.outputs.repo_lower }}/${{ ENV.CONTAINER_NAME }}:cache,mode=max
 
-    - name: 🚀 Push buildah-xip
+    - name: 🚀 Push ${{ ENV.CONTAINER_NAME }}
       if: github.ref == 'refs/heads/master' || github.event_name == 'schedule'
       uses: docker/build-push-action@v6
       with:
         platforms: linux/amd64,linux/arm64
         push: true
         tags: |
-          xipdockeruser/buildah-xip:latest
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
+          ${{ secrets.DOCKERHUB_USERNAME }}/${{ ENV.CONTAINER_NAME }}:latest
+        cache-from: type=registry,ref=ghcr.io/${{ steps.vars.outputs.repo_lower }}/${{ ENV.CONTAINER_NAME }}:cache
+        cache-to: type=registry,ref=ghcr.io/${{ steps.vars.outputs.repo_lower }}/${{ ENV.CONTAINER_NAME }}:cache,mode=max
