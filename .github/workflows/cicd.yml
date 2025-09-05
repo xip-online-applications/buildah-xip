@@ -13,18 +13,13 @@ env:
   CONTAINER_NAME: buildah-xip
 
 jobs:
-  muh-test-gha:
+  workflow-keepalive:
+    if: github.event_name == 'schedule'
     runs-on: ubuntu-latest
-
+    permissions:
+      actions: write
     steps:
-      - name: 📥 Checkout
-        uses: actions/checkout@v5
-
-      - name: 🐛 Debug Info
-        run: |
-          echo "Branch: ${{ github.ref }}"
-          echo "Event: ${{ github.event_name }}"
-          echo "Repository: ${{ github.repository }}"
+      - uses: liskin/gh-workflow-keepalive@v1
 
   push:
     runs-on: ubuntu-latest
