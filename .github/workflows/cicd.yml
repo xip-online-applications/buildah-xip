@@ -13,6 +13,19 @@ env:
   CONTAINER_NAME: buildah-xip
 
 jobs:
+  muh-test-gha:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v5
+
+      - name: 🐛 Debug Info
+        run: |
+          echo "Branch: ${{ github.ref }}"
+          echo "Event: ${{ github.event_name }}"
+          echo "Repository: ${{ github.repository }}"
+
   push:
     runs-on: ubuntu-latest
 
