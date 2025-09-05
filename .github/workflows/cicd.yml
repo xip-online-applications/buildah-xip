@@ -45,22 +45,22 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
           logout: false
 
-      - name: 🧪 Test ${{ ENV.CONTAINER_NAME }}
+      - name: 🧪 Test ${{ env.CONTAINER_NAME }}
         if: github.ref != 'refs/heads/master' && github.event_name != 'schedule'
         uses: docker/build-push-action@v6
         with:
           platforms: linux/amd64,linux/arm64
           push: false
-          cache-from: type=registry,ref=ghcr.io/${{ steps.vars.outputs.repo_lower }}/${{ ENV.CONTAINER_NAME }}:cache
-          cache-to: type=registry,ref=ghcr.io/${{ steps.vars.outputs.repo_lower }}/${{ ENV.CONTAINER_NAME }}:cache,mode=max
+          cache-from: type=registry,ref=ghcr.io/${{ steps.vars.outputs.repo_lower }}/${{ env.CONTAINER_NAME }}:cache
+          cache-to: type=registry,ref=ghcr.io/${{ steps.vars.outputs.repo_lower }}/${{ env.CONTAINER_NAME }}:cache,mode=max
 
-      - name: 🚀 Push ${{ ENV.CONTAINER_NAME }}
+      - name: 🚀 Push ${{ env.CONTAINER_NAME }}
         if: github.ref == 'refs/heads/master' || github.event_name == 'schedule'
         uses: docker/build-push-action@v6
         with:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ ENV.CONTAINER_NAME }}:latest
-          cache-from: type=registry,ref=ghcr.io/${{ steps.vars.outputs.repo_lower }}/${{ ENV.CONTAINER_NAME }}:cache
-          cache-to: type=registry,ref=ghcr.io/${{ steps.vars.outputs.repo_lower }}/${{ ENV.CONTAINER_NAME }}:cache,mode=max
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.CONTAINER_NAME }}:latest
+          cache-from: type=registry,ref=ghcr.io/${{ steps.vars.outputs.repo_lower }}/${{ env.CONTAINER_NAME }}:cache
+          cache-to: type=registry,ref=ghcr.io/${{ steps.vars.outputs.repo_lower }}/${{ env.CONTAINER_NAME }}:cache,mode=max
