@@ -3,6 +3,6 @@ FROM ghcr.io/gitleaks/gitleaks AS gitleaks
 FROM quay.io/buildah/stable
 
 RUN dnf install -y curl gawk git-crypt tzdata which && \
-    dnf clean all
+  dnf clean all
 
 COPY --from=gitleaks /usr/bin/gitleaks /usr/bin/gitleaks
