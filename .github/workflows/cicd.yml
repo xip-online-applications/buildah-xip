@@ -59,7 +59,7 @@ jobs:
 
       - name: 🧪 Test ${{ env.CONTAINER_NAME }}
         if: github.ref != 'refs/heads/master' && github.event_name != 'schedule'
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           platforms: linux/amd64,linux/arm64
           push: false
@@ -68,7 +68,7 @@ jobs:
 
       - name: 🚀 Push ${{ env.CONTAINER_NAME }}
         if: github.ref == 'refs/heads/master' || github.event_name == 'schedule'
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           platforms: linux/amd64,linux/arm64
           push: true
