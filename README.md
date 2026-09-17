@@ -6,7 +6,7 @@
 
 [buildah](https://buildah.io)
 +
-[curl, git-crypt, gitleaks, tzdata, which]
+[awscli2, curl, gawk, git-lfs, git-crypt, gitleaks, rsync, tzdata, which]
 
 ## Building flow
 
